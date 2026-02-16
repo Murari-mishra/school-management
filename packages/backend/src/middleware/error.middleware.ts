@@ -16,10 +16,10 @@ export const errorHandler = (
   let error = { ...err };
   error.message = err.message;
 
-  // Log error for development
+ 
   console.error(err);
 
-  // Handle ApiError
+
   if (err instanceof ApiError) {
     const response: any = {
       success: false,

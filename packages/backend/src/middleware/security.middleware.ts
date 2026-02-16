@@ -8,12 +8,12 @@ import config from '../config/env';
 
 // Rate limiter middleware
 export const limiter = rateLimit({
-  windowMs: config.rateLimitWindow * 60 * 1000, // Convert minutes to milliseconds
+  windowMs: config.rateLimitWindow * 60 * 1000, 
   max: config.rateLimitMax,
   message: 'Too many requests from this IP, please try again later.',
   standardHeaders: true,
   legacyHeaders: false,
-  skip: (_req: any) => config.nodeEnv === 'test', // Skip in test environment
+  skip: (_req: any) => config.nodeEnv === 'test', // for testig
 });
 
 // Auth-specific rate limiter (stricter)
@@ -72,7 +72,7 @@ export const helmetConfig = helmet({
 // Compression middleware
 export const compress = compression({
   level: 6,
-  threshold: 100 * 1000, // only compress responses larger than 100kb
+  threshold: 100 * 1000, 
 });
 
 // CORS options configuration
@@ -95,7 +95,7 @@ export const corsOptions = {
   maxAge: 86400, // 24 hours
 };
 
-// Security middleware chain (to be applied in order)
+// Security middleware chain 
 export const securityMiddleware = {
   limiter,
   authLimiter,

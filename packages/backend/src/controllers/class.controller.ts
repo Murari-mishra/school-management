@@ -9,13 +9,13 @@ export class ClassController {
   static createClass = asyncHandler(async (req: Request, res: Response) => {
     const { className, sections, classTeacher, subjects, academicYear, roomNumber, capacity } = req.body;
 
-    // Check if class already exists for this academic year
+    // Checking class if exist
     const existingClass = await Class.findOne({ className, academicYear });
     if (existingClass) {
       throw new ApiError(400, `Class ${className} already exists for academic year ${academicYear}`);
     }
 
-    // Check if teacher exists
+    //teacher exists
     const teacher = await Teacher.findById(classTeacher);
     if (!teacher) {
       throw new ApiError(404, 'Teacher not found');
@@ -159,13 +159,13 @@ export class ClassController {
   static getClassStats = asyncHandler(async (req: Request, res: Response) => {
     const classId = req.params.id;
     
-    // Get total students in class
+   
     const totalStudents = await Student.countDocuments({
       class: classId,
       isActive: true,
     });
 
-    // Get students by section
+    
     const studentsBySection = await Student.aggregate([
       { $match: { class: classId, isActive: true } },
       { $group: { _id: '$section', count: { $sum: 1 } } },

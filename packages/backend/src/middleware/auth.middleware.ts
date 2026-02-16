@@ -29,14 +29,14 @@ export const protect = asyncHandler(async (
 ) => {
   let token;
 
-  // Check authorization header
+
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
   }
-  // Check session
+
   else if (req.session?.userId) {
     token = req.session.userId;
   }
@@ -100,7 +100,7 @@ export const authorize = (...roles: UserRole[]) => {
   };
 };
 
-// Session timeout middleware (5 minutes)
+// Session timeout 
 export const sessionTimeout = asyncHandler(async (
   req: Request,
   _res: Response,
@@ -111,7 +111,6 @@ export const sessionTimeout = asyncHandler(async (
     const timeout = 5 * 60 * 1000; // 5 minutes
 
     if (now - req.session.lastActivity > timeout) {
-      // Session expired
       req.session.destroy((err: any) => {
         if (err) console.error('Session destruction error:', err);
       });
@@ -135,7 +134,7 @@ export const checkConcurrentLogin = asyncHandler(async (
     const lastActive = req.user.lastActive || new Date(0);
     const now = new Date();
 
-    // If last activity was more than 5 minutes ago and not from this session
+    // checking if the user is active in last 5 min or not
     if (now.getTime() - lastActive.getTime() > 5 * 60 * 1000) {
       // Update last active
       req.user.lastActive = now;

@@ -110,8 +110,7 @@ export class AuthController {
 
     await AuthService.forgotPassword(email);
 
-    // TODO: Send reset email with token (service already generates token)
-
+    // TODO: Send reset email with token 
     res.status(200).json({
       success: true,
       statusCode: 200,

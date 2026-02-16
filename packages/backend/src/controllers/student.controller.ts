@@ -209,10 +209,10 @@ export class StudentController {
 
     let report;
     if (academicYear) {
-      // academicYear expected in format "YYYY-YYYY"
+      
       const [startY, endY] = (academicYear as string).split('-').map(Number);
-      const start = new Date(startY, 3, 1); // academic year starts April 1
-      const end = new Date(endY, 2, 31); // ends March 31
+      const start = new Date(startY, 3, 1);
+      const end = new Date(endY, 2, 31); 
       report = await StudentService.getAttendanceReport(id, start, end);
     } else {
       const start = startDate ? new Date(startDate as string) : undefined;

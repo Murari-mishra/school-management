@@ -1,9 +1,5 @@
 import mongoose from 'mongoose';
 
-// ====================
-// ENUMS
-// ====================
-
 export enum UserRole {
   PRINCIPAL = 'principal',
   TEACHER = 'teacher',
@@ -55,9 +51,6 @@ export enum EventType {
   VIEW = 'view',
 }
 
-// ====================
-// INTERFACES
-// ====================
 
 export interface IUser {
   email: string;
@@ -93,8 +86,8 @@ export interface IStudent extends IUser {
   emergencyContact: string;
   bloodGroup?: string;
   medicalConditions?: string;
-  class: mongoose.Types.ObjectId; // Class ID
-  className?: string; // Virtual
+  class: mongoose.Types.ObjectId; 
+  className?: string;
   section: string;
   rollNumber: number;
   admissionDate: Date;
@@ -111,7 +104,7 @@ export interface ITeacher extends IUser {
   subjects: string[];
   assignedClasses: Array<{
     class: mongoose.Types.ObjectId;
-    className?: string; // Virtual
+    className?: string; 
     section: string;
     subject: string;
   }>;
@@ -129,17 +122,17 @@ export interface ITeacher extends IUser {
 }
 
 export interface IClass {
-  className: string; // 'Nursery', 'KG', '1', '2', ..., '12'
+  className: string; 
   sections: string[];
-  classTeacher: mongoose.Types.ObjectId; // Teacher ID
-  classTeacherName?: string; // Virtual
+  classTeacher: mongoose.Types.ObjectId;
+  classTeacherName?: string; 
   subjects: Array<{
     name: string;
     teacher: mongoose.Types.ObjectId;
-    teacherName?: string; // Virtual
+    teacherName?: string; 
   }>;
-  academicYear: string; // '2024-2025'
-  totalStudents?: number; // Virtual
+  academicYear: string;
+  totalStudents?: number; 
   roomNumber?: string;
   capacity: number;
   createdAt: Date;
@@ -147,16 +140,16 @@ export interface IClass {
 }
 
 export interface IAttendance {
-  student: mongoose.Types.ObjectId; // Student ID
-  studentName?: string; // Virtual
-  studentRoll?: number; // Virtual
-  class: mongoose.Types.ObjectId; // Class ID
-  className?: string; // Virtual
+  student: mongoose.Types.ObjectId; 
+  studentName?: string; 
+  studentRoll?: number; 
+  class: mongoose.Types.ObjectId; 
+  className?: string; 
   section: string;
   date: Date;
   status: AttendanceStatus;
-  markedBy: mongoose.Types.ObjectId; // Teacher ID
-  markedByName?: string; // Virtual
+  markedBy: mongoose.Types.ObjectId; 
+  markedByName?: string; 
   remarks?: string;
   lateMinutes?: number;
   createdAt: Date;
@@ -164,10 +157,10 @@ export interface IAttendance {
 }
 
 export interface IDisciplineRecord {
-  student: mongoose.Types.ObjectId; // Student ID
-  studentName?: string; // Virtual
-  teacher: mongoose.Types.ObjectId; // Teacher ID
-  teacherName?: string; // Virtual
+  student: mongoose.Types.ObjectId; 
+  studentName?: string; 
+  teacher: mongoose.Types.ObjectId; 
+  teacherName?: string;
   date: Date;
   type: DisciplineType;
   description: string;
@@ -184,7 +177,7 @@ export interface IDisciplineRecord {
 }
 
 export interface INotification {
-  recipient: mongoose.Types.ObjectId; // User ID
+  recipient: mongoose.Types.ObjectId; 
   type: NotificationType;
   title: string;
   message: string;
@@ -211,9 +204,6 @@ export interface IAuditLog {
   createdAt: Date;
 }
 
-// ====================
-// REQUEST/RESPONSE TYPES
-// ====================
 
 export interface LoginCredentials {
   email: string;
@@ -231,12 +221,12 @@ export interface LoginResponse {
     role: UserRole;
     fullName: string;
     profilePicture?: string;
-    studentId?: string; // For students
-    teacherId?: string; // For teachers
-    class?: string | mongoose.Types.ObjectId; // For students
-    section?: string; // For students
-    rollNumber?: number; // For students
-    subjects?: string[]; // For teachers
+    studentId?: string;
+    teacherId?: string;
+    class?: string | mongoose.Types.ObjectId; 
+    section?: string; 
+    rollNumber?: number; 
+    subjects?: string[]; 
   };
 }
 
@@ -259,9 +249,7 @@ export interface ApiResponse<T = any> {
   };
 }
 
-// ====================
-// DASHBOARD TYPES
-// ====================
+
 
 export interface DashboardStats {
   totalStudents: number;
@@ -343,9 +331,6 @@ export interface PrincipalDashboardData {
   pendingApprovals: number;
 }
 
-// ====================
-// FILTER & QUERY TYPES
-// ====================
 
 export interface StudentFilter {
   class?: string;
@@ -376,9 +361,6 @@ export interface DateRange {
   endDate: Date;
 }
 
-// ====================
-// NOTIFICATION TYPES
-// ====================
 
 export interface EmailOptions {
   to: string | string[];
@@ -404,9 +386,7 @@ export interface PushNotification {
   click_action?: string;
 }
 
-// ====================
-// ERROR TYPES
-// ====================
+
 
 export interface ValidationError {
   field: string;

@@ -23,7 +23,6 @@ export const userController = {
     }
   },
 
-  // Get user by ID
   getUserById: async (req: Request, res: Response): Promise<void> => {
     try {
       const user = await User.findById(req.params.id).select('-password');
@@ -82,7 +81,7 @@ export const userController = {
 
       const student = await Student.create({
         email,
-        password, // will be hashed by pre-save hook
+        password,
         role: UserRole.STUDENT,
         studentId,
         fullName,
@@ -145,7 +144,7 @@ export const userController = {
 
       const teacher = await Teacher.create({
         email,
-        password, // will be hashed by pre-save hook
+        password,
         role: UserRole.TEACHER,
         teacherId,
         fullName,
@@ -177,8 +176,8 @@ export const userController = {
   updateUser: async (req: Request, res: Response): Promise<void> => {
     try {
       const updates = req.body;
-      delete updates.password; // Prevent password update via this route
-      delete updates.role; // Prevent role change via this route
+      delete updates.password; 
+      delete updates.role; 
 
       const user = await User.findByIdAndUpdate(
         req.params.id,
@@ -206,7 +205,7 @@ export const userController = {
     }
   },
 
-  // Delete user (soft delete)
+ 
   deleteUser: async (req: Request, res: Response): Promise<void> => {
     try {
       const user = await User.findByIdAndUpdate(

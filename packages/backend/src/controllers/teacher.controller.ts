@@ -103,7 +103,6 @@ export class TeacherController {
   static updateTeacher = asyncHandler(async (req: Request, res: Response) => {
     const updates = req.body;
 
-    // Don't allow updating email, role, or password here
     delete updates.email;
     delete updates.role;
     delete updates.password;
@@ -166,13 +165,12 @@ export class TeacherController {
   static assignClass = asyncHandler(async (req: Request, res: Response) => {
     const { classId, section, subject } = req.body;
 
-    // Check if class exists
     const classExists = await Class.findById(classId);
     if (!classExists) {
       throw new ApiError(404, 'Class not found');
     }
 
-    // Check if teacher already assigned to this class/section
+    // Checking if the teacher assign to the class
     const teacher = await Teacher.findById(req.params.id);
     if (!teacher) {
       throw new ApiError(404, 'Teacher not found');

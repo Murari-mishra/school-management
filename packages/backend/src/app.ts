@@ -1,15 +1,15 @@
 import express, { Application } from 'express';
 import mongoose from 'mongoose';
 import session from 'express-session';
-// Redis is optional in development — use MemoryStore when Redis isn't available.
+// Redis is optional in development 
 import cors from 'cors';
 import morgan from 'morgan';
 import path from 'path';
 
-// Config
+
 import config from './config/env';
 
-// Middleware
+
 import {
   limiter,
   sanitize,
@@ -22,7 +22,6 @@ import {
 import { sessionTimeout, checkConcurrentLogin } from './middleware/auth.middleware';
 import { errorHandler } from './middleware/error.middleware';
 
-// Routes
 import authRoutes from './routes/auth.routes';
 import userRoutes from './routes/user.routes';
 import studentRoutes from './routes/student.routes';
@@ -70,30 +69,28 @@ class App {
   }
 
   private initializeMiddleware(): void {
-    // Security middleware
     this.app.use(helmetConfig);
     this.app.use(cors(corsOptions));
     this.app.use(compress as any);
     
-    // Rate limiting
     this.app.use('/api', limiter as any);
     
-    // Body parsing
+
     this.app.use(express.json({ limit: '10mb' }));
     this.app.use(express.urlencoded({ extended: true, limit: '10mb' }));
     
-    // Data sanitization
+
     this.app.use(sanitize as any);
     this.app.use(xssProtection as any);
     this.app.use(hppProtection as any);
     
     // Session configuration
-    // Redis may not be available in local dev; use MemoryStore as fallback for now.
+    // using MemoryStore as fallback for now.
     const MemoryStore = session.MemoryStore;
 
     this.app.use(
       (session({
-        store: new MemoryStore(), // temporary in-memory store
+        store: new MemoryStore(), 
         secret: config.sessionSecret,
         name: 'schoolmis.sid',
         resave: false,
@@ -109,21 +106,21 @@ class App {
       }) as unknown) as any
     );
 
-    // Logger
+    
     if (config.nodeEnv === 'development') {
       this.app.use(morgan('dev'));
     }
 
-    // Static files
+  
     this.app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
-    // Custom middleware
+  
     this.app.use(sessionTimeout);
     this.app.use(checkConcurrentLogin);
   }
 
   private initializeRoutes(): void {
-    // Health check
+  
     this.app.get('/api/health', (_req, res) => {
       res.status(200).json({
         success: true,
@@ -138,7 +135,7 @@ class App {
       });
     });
 
-    // API routes
+  
     this.app.use('/api/auth', authRoutes);
     this.app.use('/api/users', userRoutes);
     this.app.use('/api/students', studentRoutes);
@@ -148,7 +145,7 @@ class App {
     this.app.use('/api/discipline', disciplineRoutes);
     this.app.use('/api/notifications', notificationRoutes);
 
-    // 404 handler
+   
     this.app.all('*', (req, res) => {
       res.status(404).json({
         success: false,
