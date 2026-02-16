@@ -56,7 +56,7 @@ export class AttendanceService {
       return existingAttendance;
     }
 
-    // Create new attendance
+    // Creating new attendance
     const attendance = await Attendance.create({
       student: new mongoose.Types.ObjectId(studentId),
       class: new mongoose.Types.ObjectId(classId),

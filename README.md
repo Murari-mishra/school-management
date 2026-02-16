@@ -1,41 +1,79 @@
 # School MIS — monorepo
 
-Quick setup & safe GitHub publish instructions ✅
+ USER ROLES & PERMISSIONS
+1. Principal (Admin)
+•	 Full access to all features
+•	 Create/Edit/Delete users (Students, Teachers)
+•	 Manage classes and sections
+•	 View all attendance records
+•	 Generate reports and analytics
+•	 System configuration
 
-## Structure
-- `packages/backend` — Express + TypeScript API
-- `packages/frontend` — Vite + React app
+2. Teacher
+•	 View assigned classes
+•	 Mark attendance for their classes
+•	 View student profiles in their classes
+•	 Add discipline/behavior records
+•	 Search students in their classes
+•	 Cannot manage users/classes
 
-## Environment & secrets (safe by default) 🔒
-- This repo ignores all `.env` files. Do **not** commit secrets.
-- Copy `packages/*/.env.example` to `packages/*/.env` and fill values for local development.
+3. Student
+•	 View personal dashboard
+•	 Check own attendance
+•	 View timetable (future)
+•	 See personal remarks
+•	 Cannot access admin/teacher features
 
-Example (backend):
-  cp packages/backend/.env.example packages/backend/.env
 
-Windows (PowerShell):
-  Copy-Item packages\backend\.env.example packages\backend\.env
 
-## Helpful npm scripts
-- Backend: (in `packages/backend`) `npm run dev`, `npm run build`, `npm run env:setup`
-- Frontend: (in `packages/frontend`) `npm run dev`, `npm run build`, `npm run env:setup`
+taken help from AI to work on this project 
+school-mis/
+├── packages/
+│   ├── backend/              # Node.js + Express + TypeScript Backend
+│   │   ├── src/
+│   │   │   ├── config/       # Environment & DB configuration
+│   │   │   ├── models/       # MongoDB Schemas
+│   │   │   ├── controllers/  # Business logic
+│   │   │   ├── routes/       # API Routes
+│   │   │   ├── middleware/   # Auth & Error handlers
+│   │   │   ├── services/     # Business services
+│   │   │   ├── utils/        # Helper functions
+│   │   │   ├── types/        # TypeScript types
+│   │   │   ├── scripts/      # Database seeding
+│   │   │   ├── app.ts        # Express app setup
+│   │   │   └── server.ts     # Server entry point
+│   │   ├── .env             # Environment variables
+│   │   ├── package.json     # Backend dependencies
+│   │   └── tsconfig.json    # TypeScript config
+│   │
+│   └── frontend/            # React + TypeScript Frontend
+│       ├── src/
+│       │   ├── components/   # Reusable UI components
+│       │   │   ├── common/   # Navbar, Sidebar, etc.
+│       │   │   └── layout/   # Layout components
+│       │   ├── pages/        # Page components
+│       │   ├── hooks/        # Custom React hooks
+│       │   ├── context/      # React Context (Auth)
+│       │   ├── services/     # API service calls
+│       │   ├── types/        # TypeScript interfaces
+│       │   ├── utils/        # Helper functions
+│       │   ├── styles/       # CSS/Tailwind config
+│       │   ├── assets/       # Images, icons
+│       │   ├── App.tsx       # Main App component
+│       │   └── main.tsx      # Entry point
+│       ├── public/          # Static files
+│       ├── tailwind.config.js # Tailwind CSS config
+│       ├── vite.config.ts   # Vite build config
+│       ├── .env            # Frontend env variables
+│       └── package.json    # Frontend dependencies
+│
+├── package.json            # Monorepo root config
+└── README.md              # Project documentation
 
-`env:setup` will create a local `.env` from `.env.example` if one does not exist.
 
-## Before pushing to GitHub
-1. Ensure `.env` files are not tracked (this project already ignores them).
-2. Replace placeholder secrets in your local `.env` with real values.
-3. Create a GitHub repository and push:
-   - git init
-   - git add .
-   - git commit -m "chore: initial commit"
-   - git branch -M main
-   - git remote add origin <your-git-url>
-   - git push -u origin main
+Access Application:
+•	Frontend: http://localhost:3000
+•	Backend API: http://localhost:5001/api
+•	API Health: http://localhost:5001/api/health
 
-## Using GitHub Secrets for CI / Deployments 💡
-- Add production secrets under: Repository → Settings → Secrets and variables → Actions
-- Reference them in GitHub Actions workflows as `${{ secrets.YOUR_SECRET }}`
 
----
-If you want, I can: 1) remove the tracked `.env` files from git, 2) add a minimal CI workflow, and/or 3) create the remote GitHub repo and push. Tell me which next step you want. ✨
